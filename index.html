@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Registration Form</title>
+<title>Registration Form</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-    <style>
-        .error {
-            color: red;
-            font-size: 14px;
-        }
-        .success {
-            color: green;
-            font-weight: bold;
-            text-align: center;
-        }
-    </style>
+<style>
+.error{
+color:red;
+font-size:14px;
+}
+.success{
+color:green;
+font-weight:bold;
+text-align:center;
+}
+</style>
+
 </head>
 
-<body class="flex justify-center items-center min-h-screen bg-gray-100">
+<body class="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-100 to-purple-100">
 
 <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
 
@@ -26,31 +27,30 @@
 
 <form id="form">
 
-    <!-- Name -->
-    <label class="font-medium">Name</label>
-    <input type="text" id="name" placeholder="Enter Name"
-    class="p-2 border border-gray-300 rounded-xl focus:outline-none w-full mt-2">
-    <div id="nameError" class="error"></div>
+<label class="font-medium">Name</label>
+<input type="text" id="name" placeholder="Enter Name"
+class="w-full p-2 border bg-gray-100 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+<div id="nameError" class="error"></div>
 
-    <!-- Email -->
-    <label class="font-medium mt-4 block">Email</label>
-    <input type="text" id="email" placeholder="Enter Email"
-    class="p-2 border border-gray-300 rounded-xl focus:outline-none w-full mt-2">
-    <div id="emailError" class="error"></div>
 
-    <!-- Password -->
-    <label class="font-medium mt-4 block">Password</label>
-    <input type="password" id="password" placeholder="Enter Password"
-    class="p-2 border border-gray-300 rounded-xl focus:outline-none w-full mt-2">
-    <div id="passwordError" class="error"></div>
+<label class="font-medium mt-4 block">Email</label>
+<input type="email" id="email" placeholder="Enter Email"
+class="w-full p-2 border bg-gray-100 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+<div id="emailError" class="error"></div>
 
-    <!-- Button -->
-    <div class="flex justify-center mt-6">
-        <button type="submit" id="submitBtn" disabled
-        class="bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition">
-        Submit
-        </button>
-    </div>
+
+<label class="font-medium mt-4 block">Password</label>
+<input type="password" id="password" placeholder="Enter Password"
+class="w-full p-2 border bg-gray-100 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+<div id="passwordError" class="error"></div>
+
+
+<div class="flex justify-center mt-6">
+<button type="submit"
+class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
+Submit
+</button>
+</div>
 
 </form>
 
@@ -60,61 +60,46 @@
 
 <script>
 
-var nameInput = document.getElementById("name")
-var emailInput = document.getElementById("email")
-var passwordInput = document.getElementById("password")
-var submitBtn = document.getElementById("submitBtn")
+document.getElementById("form").addEventListener("submit",function(e){
 
-var nameError = document.getElementById("nameError")
-var emailError = document.getElementById("emailError")
-var passwordError = document.getElementById("passwordError")
+e.preventDefault()
 
-function validateForm() {
+let name=document.getElementById("name").value
+let email=document.getElementById("email").value
+let password=document.getElementById("password").value
 
-    var isValid = true
+let nameError=document.getElementById("nameError")
+let emailError=document.getElementById("emailError")
+let passwordError=document.getElementById("passwordError")
+let success=document.getElementById("successMessage")
 
-    // Name validation
-    if (nameInput.value.trim() === "") {
-        nameError.textContent = "Name cannot be empty"
-        isValid = false
-    } else {
-        nameError.textContent = ""
-    }
+nameError.textContent=""
+emailError.textContent=""
+passwordError.textContent=""
+success.textContent=""
 
-    // Email validation
-    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+let valid=true
 
-    if (!emailPattern.test(emailInput.value)) {
-        emailError.textContent = "Enter a valid email address"
-        isValid = false
-    } else {
-        emailError.textContent = ""
-    }
-
-    // Password validation
-    if (passwordInput.value.length < 6) {
-        passwordError.textContent = "Password must be at least 6 characters"
-        isValid = false
-    } else {
-        passwordError.textContent = ""
-    }
-
-    submitBtn.disabled = !isValid
+if(name===""){
+nameError.textContent="Name is required"
+valid=false
 }
 
-nameInput.addEventListener("input", validateForm)
-emailInput.addEventListener("input", validateForm)
-passwordInput.addEventListener("input", validateForm)
+let emailPattern=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/
 
-document.getElementById("form").addEventListener("submit", function(event){
+if(!email.match(emailPattern)){
+emailError.textContent="Enter a valid email"
+valid=false
+}
 
-    event.preventDefault() 
+if(password.length<6){
+passwordError.textContent="Password must be at least 6 characters"
+valid=false
+}
 
-    if (!submitBtn.disabled) {
-        document.getElementById("successMessage").textContent = "Submitted successfully!"
-        this.reset()
-        submitBtn.disabled = true
-    }
+if(valid){
+success.textContent="Registration Successful!"
+}
 
 })
 
